@@ -1,0 +1,25 @@
+{
+  "name": "qr_lock_router_laptop",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/okkk2010/QR_Lock_Router_Laptop.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/okkk2010/QR_Lock_Router_Laptop/issues"
+  },
+  "homepage": "https://github.com/okkk2010/QR_Lock_Router_Laptop#readme",
+  "dependencies": {
+    "nodejs": "^0.0.0",
+    "serialport": "^13.0.0",
+    "socket.io-client": "^4.8.1"
+  }
+}
