@@ -68,12 +68,7 @@ port.on("error", (err) => {
 
 
 const showQR = () => {
-    // const opener = process.platform === "win32" ? "start" : process.platform === "darwin" ? "open" : "xdg-open";
-    // exec(`${opener} "${QR_IMAGE_PATH}"`, (err) => {
-    //     if(err) {
-    //         console.error("Error opening QR code image:", err);
-    //     }
-    // })
+
     let cmd;
     if(process.platform === "win32") {
         cmd = `start "" "${QR_IMAGE_PATH}"`;
