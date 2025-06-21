@@ -3,13 +3,17 @@ const { SerialPort, ReadlineParser } = require('serialport');
 const { exec } = require('child_process');
 const path = require('path');
 
-const SERVER_URL = 'http://127.0.0.1:3030';
+const SERVER_URL = 'https://qr-door-lock-923b9e990317.herokuapp.com';
 const DEVICE_ID = "MY_LAPTOP_1";
 const SERIAL_PATH = "COM5";
 const BAUD_RATE = 9600;
 const QR_IMAGE_PATH = path.join(__dirname, 'QRLock.png');
 
-const socket = io(SERVER_URL, { reconnection: true });
+const socket = io(SERVER_URL, {
+    path: '/socket.io',
+    transports: ['websocket'],
+    reconnection: true 
+});
 
 // laptopClient.js 맨 위에 넣으세요
 
@@ -40,6 +44,17 @@ socket.on("unlock", ({ code }) => {
     });
 });
 
+socket.on('connect_error', (err) => {
+    console.error('Socket connect_error:', err);
+});
+socket.on('connect_timeout', () => {
+    console.error('Socket connect_timeout');
+});
+socket.on('reconnect_failed', () => {
+    console.error('Socket reconnect_failed');
+});
+
+
 const port = new SerialPort({
     path: SERIAL_PATH,
     baudRate: BAUD_RATE,
@@ -68,7 +83,12 @@ port.on("error", (err) => {
 
 
 const showQR = () => {
-
+    // const opener = process.platform === "win32" ? "start" : process.platform === "darwin" ? "open" : "xdg-open";
+    // exec(`${opener} "${QR_IMAGE_PATH}"`, (err) => {
+    //     if(err) {
+    //         console.error("Error opening QR code image:", err);
+    //     }
+    // })
     let cmd;
     if(process.platform === "win32") {
         cmd = `start "" "${QR_IMAGE_PATH}"`;
